@@ -18,7 +18,7 @@ func (u *user) ValidatePassword(password string) bool {
 	return err == nil
 }
 
-func Create(name, email, password, document string) (*user, error) {
+func CreateUser(name, email, password, document string) (*user, error) {
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
