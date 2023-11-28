@@ -1,16 +1,17 @@
-package entities
+package entity
 
 import (
-	entities "github.com/renatocantarino/go/APIS/pkg/Entities"
+	"github.com/renatocantarino/go/APIS/pkg/entity"
+	entities "github.com/renatocantarino/go/APIS/pkg/entity"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	ID       entities.ID `json:"id"`
-	Name     string      `json:"name"`
-	Email    string      `json:"email"`
-	Document string      `json:"document"`
-	Password string      `json:"-"`
+	ID       entity.ID `json:"id"`
+	Name     string    `json:"name"`
+	Email    string    `json:"email"`
+	Document string    `json:"document"`
+	Password string    `json:"-"`
 }
 
 func (u *User) ValidatePassword(password string) bool {
@@ -18,7 +19,7 @@ func (u *User) ValidatePassword(password string) bool {
 	return err == nil
 }
 
-func CreateUser(name, email, password, document string) (*User, error) {
+func CreateUser(name, email, document, password string) (*User, error) {
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {

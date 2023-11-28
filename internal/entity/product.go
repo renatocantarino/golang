@@ -1,10 +1,10 @@
-package entities
+package entity
 
 import (
 	"errors"
 	"time"
 
-	entities "github.com/renatocantarino/go/APIS/pkg/Entities"
+	"github.com/renatocantarino/go/APIS/pkg/entity"
 )
 
 var (
@@ -15,19 +15,19 @@ var (
 )
 
 type Product struct {
-	ID       entities.ID `json:"id"`
-	Name     string      `json:"name"`
-	Price    float64     `json:"price"`
-	CreateAt time.Time   `json:"created_at"`
+	ID        entity.ID `json:"id"`
+	Name      string    `json:"name"`
+	Price     float64   `json:"price"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 func CreateProduct(name string, price float64) (*Product, error) {
 
 	product := &Product{
-		ID:       entities.Generate(),
-		Name:     name,
-		Price:    price,
-		CreateAt: time.Now(),
+		ID:        entity.Generate(),
+		Name:      name,
+		Price:     price,
+		CreatedAt: time.Now(),
 	}
 
 	err := product.Validate()
@@ -45,7 +45,7 @@ func (p *Product) Validate() error {
 		return ErrIdIsRequired
 	}
 
-	if _, err := entities.Validate(p.ID.String()); err != nil {
+	if _, err := entity.Validate(p.ID.String()); err != nil {
 		return ErrIdIsRequired
 	}
 

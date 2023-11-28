@@ -2,7 +2,7 @@ package database
 
 import (
 	"github.com/google/uuid"
-	entities "github.com/renatocantarino/go/APIS/internal/Entities"
+	"github.com/renatocantarino/go/APIS/internal/entity"
 	"gorm.io/gorm"
 )
 
@@ -15,13 +15,19 @@ func NewProduct(db *gorm.DB) *Product {
 
 }
 
-func (prd *Product) Create(prod *entities.Product) error {
-	return prd.DB.Create(prod).Error
+func (p *Product) Create(product *entity.Product) error {
+	return p.DB.Create(product).Error
 }
 
-func (prd *Product) FindById(identifier uuid.UUID) (*entities.Product, error) {
-	var produt entities.Product
+func (prd *Product) FindById(identifier uuid.UUID) (*entity.Product, error) {
+	var produt entity.Product
 	err := prd.DB.First(&produt, "id = ?", identifier).Error
+	return &produt, err
+}
+
+func (prd *Product) FindByName(name string) (*entity.Product, error) {
+	var produt entity.Product
+	err := prd.DB.First(&produt, "name = ?", name).Error
 	return &produt, err
 }
 
@@ -33,9 +39,9 @@ func getSort(sort string) string {
 	return sort
 }
 
-func (prd *Product) FindAll(page, limit int, sort string) ([]entities.Product, error) {
+func (prd *Product) FindAll(page, limit int, sort string) ([]entity.Product, error) {
 
-	var produtos []entities.Product
+	var produtos []entity.Product
 	var err error
 	_sort := getSort(sort)
 	if page != 0 && limit != 0 {
@@ -49,11 +55,13 @@ func (prd *Product) FindAll(page, limit int, sort string) ([]entities.Product, e
 
 }
 
-func (prd *Product) Update(prod *entities.Product) error {
-	_, err := prd.FindById(prod.ID)
+func (prd *Product) Update(prod *entity.Product) error {
+	updated, err := prd.FindById(prod.ID)
 	if err != nil {
 		return err
 	}
+
+	prod.CreatedAt = updated.CreatedAt
 
 	return prd.DB.Save(prod).Error
 

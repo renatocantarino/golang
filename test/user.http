@@ -1,0 +1,19 @@
+POST http://localhost:8011/user  HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "renato",
+    "email": "renato@r.com.br",
+    "document": "04478598447",
+    "password": "123456"
+}
+
+###
+POST http://localhost:8011/user/token  HTTP/1.1
+Content-Type: application/json
+
+{
+    
+    "email": "renato@r.com.br",    
+    "password": "123456"
+}

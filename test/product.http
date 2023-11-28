@@ -1,0 +1,28 @@
+POST http://localhost:8011/product  HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "prod2",
+    "price": 100.21
+}
+
+###
+GET http://localhost:8011/product/e7f43b9e-266d-47be-9bf3-d5c98ec41ef7  HTTP/1.1
+
+
+###
+GET http://localhost:8011/products  HTTP/1.1
+
+
+###
+PUT http://localhost:8011/product/e7f43b9e-266d-47be-9bf3-d5c98ec41ef7  HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "prod updated",
+    "price": 1001.21
+}
+
+
+###
+DELETE  http://localhost:8011/product/e7f43b9e-266d-47be-9bf3-d5c98ec41ef7  HTTP/1.1

@@ -3,7 +3,7 @@ package database
 import (
 	"testing"
 
-	entities "github.com/renatocantarino/go/APIS/internal/Entities"
+	"github.com/renatocantarino/go/APIS/internal/entity"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -16,8 +16,8 @@ func TestCreateUser(t *testing.T) {
 		t.Error(err)
 	}
 
-	db.AutoMigrate(&entities.User{})
-	user, _ := entities.CreateUser("renato", "r@r.com.br", "123456", "09885984477")
+	db.AutoMigrate(&entity.User{})
+	user, _ := entity.CreateUser("renato", "r@r.com.br", "123456", "09885984477")
 	userDB := NewUser(db)
 
 	err = userDB.Create(user)
@@ -44,9 +44,9 @@ func TestFindByEmail(t *testing.T) {
 		t.Error(err)
 	}
 
-	db.AutoMigrate(&entities.User{})
+	db.AutoMigrate(&entity.User{})
 
-	user, _ := entities.CreateUser("renato", "r@r.com.br", "123456", "09885984477")
+	user, _ := entity.CreateUser("renato", "r@r.com.br", "123456", "09885984477")
 	userDB := NewUser(db)
 
 	err = userDB.Create(user)
